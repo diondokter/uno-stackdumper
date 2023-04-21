@@ -14,23 +14,19 @@ pub mod console;
 #[avr_device::interrupt(atmega328p)]
 fn USART_RX() {
     static mut STACK: MaybeUninit<ArrayMemoryRegion<128>> = core::mem::MaybeUninit::uninit();
-    static mut REGISTERS: MaybeUninit<ArrayRegisterData<36, u8>> = core::mem::MaybeUninit::uninit();
+    static mut REGISTERS: MaybeUninit<ArrayRegisterData<34, u16>> = core::mem::MaybeUninit::uninit();
 
     let stack = unsafe { STACK.assume_init_mut() };
     let registers = unsafe { REGISTERS.assume_init_mut() };
 
     stackdump_capture::avr::capture::<128>(stack, registers);
 
-    cprintln!("Registers:");
-    for byte in registers.bytes() {
-        cprint!("{:02X} ", byte);
-    }
-    cprintln!("");
-    cprintln!("Stack:");
     for byte in stack.bytes() {
         cprint!("{:02X} ", byte);
     }
-    cprintln!("");
+    for byte in registers.bytes() {
+        cprint!("{:02X} ", byte);
+    }
 
     panic!()
 }
