@@ -7,8 +7,16 @@ edition = "2021"
 
 [dependencies]
 arduino-hal = { git = "https://github.com/Rahix/avr-hal.git", features = ["arduino-uno"] }
+avr-device = "0.5.1"
 panic-halt = "0.2.0"
+ufmt = "0.2.0"
+
+stackdump-capture = "0.4"
 
 [profile.release]
 lto = true
 panic = "abort"
+debug = true
+
+[patch.crates-io]
+stackdump-capture = { path = "../../os-repos/stackdump/capture" }
