@@ -1,0 +1,11 @@
+[target.'cfg(target_arch = "avr")']
+runner = "ravedude uno -cb 57600"
+
+[build]
+target = "avr-atmega328p.json"
+
+[unstable]
+build-std = ["core"]
+
+[env]
+AVR_CPU_FREQUENCY_HZ = "16_000_000"
